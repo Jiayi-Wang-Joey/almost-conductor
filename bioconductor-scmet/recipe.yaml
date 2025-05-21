@@ -1,0 +1,81 @@
+package:
+  name: bioconductor-scmet
+  version: 1.10.0
+
+about:
+  license: GPL-3.0-or-later
+  homepage: https://www.bioconductor.org/packages/release/bioc/html/scMET.html
+  summary: Bayesian modelling of cell-to-cell DNA methylation heterogeneity
+  description: |
+     High-throughput single-cell measurements of DNA methylomes can
+     quantify methylation heterogeneity and uncover its role in gene regulation.
+     However, technical limitations and sparse coverage can preclude this task.
+     scMET is a hierarchical Bayesian model which overcomes sparsity, sharing
+     information across cells and genomic features to robustly quantify genuine
+     biological heterogeneity. scMET can identify highly variable features that
+     drive epigenetic heterogeneity, and perform differential methylation and
+     variability analyses. We illustrate how scMET facilitates the characterization
+     of epigenetically distinct cell populations and how it enables the formulation
+     of novel hypotheses on the epigenetic regulation of gene expression.
+
+extra:
+  maintainers:
+   - ben.uzh@pm.me
+
+source:
+  url: https://www.bioconductor.org/packages/release/bioc/src/contrib/scMET_1.10.0.tar.gz
+  sha256: d5f474a748bf71eb78dc02e889059b3cf91f72c3e983a70ff08f9fa84b4b39cb
+
+build:
+  number: 0
+  script: R CMD INSTALL --build .
+
+requirements:
+  host:
+    - r-base >=4.2
+    - r-cowplot
+    - r-coda
+    - r-data.table
+    - r-ggplot2
+    - r-viridis
+    - r-vgam
+    - r-stanheaders >=2.21.0.7
+    - r-mass
+    - r-matrix
+    - r-matrixstats
+    - r-logitnorm
+    - r-rcpp >=1.0.0
+    - r-dplyr
+    - r-bh
+    - r-assertthat
+    - libcxx >= 18
+    - bioconductor-singlecellexperiment
+    - bioconductor-s4vectors
+    - r-rstan
+    - r-rstantools
+    - bioconductor-biocstyle >=2.34.0,<2.35.0
+
+  run:
+    - r-base >=4.2
+    - r-cowplot
+    - r-coda
+    - r-data.table
+    - r-ggplot2
+    - r-viridis
+    - r-vgam
+    - r-stanheaders >=2.21.0.7
+    - r-mass
+    - r-matrix
+    - r-matrixstats
+    - r-logitnorm
+    - r-rcpp >=1.0.0
+    - r-dplyr
+    - r-bh
+    - r-assertthat
+    - libcxx >= 18
+    - bioconductor-singlecellexperiment
+    - bioconductor-s4vectors
+    - r-rstan
+    - r-rstantools
+    - bioconductor-biocstyle >=2.34.0,<2.35.0
+
