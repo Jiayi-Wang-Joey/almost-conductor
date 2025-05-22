@@ -1,0 +1,65 @@
+context: {}
+
+package:
+  name: r-extradistr
+  version: 1.10.0
+
+source:
+- url:
+  - https://cran.r-project.org/src/contrib/extraDistr_1.10.0.tar.gz
+  - https://cran.r-project.org/src/contrib/Archive/extraDistr_1.10.0.tar.gz
+  sha256: f4264a6c2c95bb7a865655b0e84f48e30dcd584498b49d626a71adaec8eda3a9
+
+build:
+  script: R CMD INSTALL --build .
+
+requirements:
+  build:
+  - ${{ compiler('c') }}
+  - ${{ compiler('cxx') }}
+  - make
+  host:
+  - r-base
+  - r-base >=3.1.0
+  - r-rcpp
+  run:
+  - r-base
+  - r-rcpp
+  # -  r-testthat  # suggested
+  # -  r-laplacesdemon  # suggested
+  # -  r-vgam  # suggested
+  # -  r-evd  # suggested
+  # -  r-skellam  # suggested
+  # -  r-triangle  # suggested
+  # -  r-actuar  # suggested
+
+tests:
+- script:
+  - Rscript -e 'library("extraDistr")'
+
+about:
+  homepage: https://github.com/twolodzko/extraDistr
+  summary: Additional Univariate and Multivariate Distributions
+  description: |-
+    Density, distribution function, quantile function and
+    random generation for a number of univariate and multivariate
+    distributions. This package implements the following
+    distributions: Bernoulli, beta-binomial, beta-negative
+    binomial, beta prime, Bhattacharjee, Birnbaum-Saunders,
+    bivariate normal, bivariate Poisson, categorical, Dirichlet,
+    Dirichlet-multinomial, discrete gamma, discrete Laplace,
+    discrete normal, discrete uniform, discrete Weibull, Frechet,
+    gamma-Poisson, generalized extreme value, Gompertz, generalized
+    Pareto, Gumbel, half-Cauchy, half-normal, half-t, Huber
+    density, inverse chi-squared, inverse-gamma, Kumaraswamy,
+    Laplace, location-scale t, logarithmic, Lomax, multivariate
+    hypergeometric, multinomial, negative hypergeometric,
+    non-standard beta, normal mixture, Poisson mixture, Pareto,
+    power, reparametrized beta, Rayleigh, shifted Gompertz,
+    Skellam, slash, triangular, truncated binomial, truncated
+    normal, truncated Poisson, Tukey lambda, Wald, zero-inflated
+    binomial, zero-inflated negative binomial, zero-inflated
+    Poisson.
+  license: GPL-2.0-only
+  repository: https://github.com/cran/extraDistr
+
