@@ -49,7 +49,7 @@ jobs:
       run: |
         pixi run rattler-build build --recipe-dir . \
           --skip-existing=all --target-platform=$TARGET_PLATFORM \
-          -c conda-forge -c https://prefix.dev/almost-conductor
+          -c conda-forge -c r -c https://prefix.dev/almost-conductor
 
     - name: Upload all packages
       shell: bash
