@@ -1,0 +1,56 @@
+context:
+  version: "1.1.0_rc4"
+
+package:
+  name: yamet
+  version: ${{ version }}
+
+about:
+  license: GPL-3.0
+  homepage: https://github.com/imallona/yamet
+  summary: "Yamet: A tool for methylation analysis."
+  description: |
+    Authors
+    Izaskun Mallona izaskun.mallona@gmail.com
+    Atreya Choudhury achoudhury@ethz.ch
+
+source:
+  url: https://github.com/imallona/yamet/archive/refs/tags/v1.1.0-rc.4.tar.gz
+  sha256: a2144b606a19a5f5bec01cd3000add5f78f313ad62e9a8cbe1949dc44b5a8dcb
+
+build:
+  number: 0
+  script: |
+      cd method
+      sed -i 's/set(Boost_USE_STATIC_LIBS ON)/set(Boost_USE_STATIC_LIBS OFF CACHE BOOL "" FORCE)/' CMakeLists.txt
+      mkdir build && cd build
+      cmake \
+        ${CMAKE_ARGS} \
+        -GNinja \
+        -DBoost_NO_BOOST_CMAKE=ON \
+        -DBoost_USE_STATIC_LIBS=OFF \
+        -DBoost_PROGRAM_OPTIONS_LIBRARY_RELEASE=$PREFIX/lib/libboost_program_options.so \
+        -DBoost_INCLUDE_DIR=$PREFIX/include \
+        ..
+      ninja install
+
+requirements:
+  build:
+    - ${{ compiler('cxx') }}
+    - cmake
+    - ninja
+    - boost-cpp=1.84
+    - zlib
+  host:
+    - boost-cpp=1.84
+    - zlib
+  run:
+    - boost-cpp=1.84
+
+tests:
+  - script:
+    - yamet --version
+
+extra:
+  recipe-maintainers:
+    -  btraven00
