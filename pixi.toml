@@ -1,0 +1,15 @@
+[project]
+name = "almost-conductor"
+version = "0.1.0"
+description = "Add a short description here"
+authors = ["ben <ben.uzh@proton.me>"]
+channels = ["conda-forge", "bioconda"]
+platforms = ["osx-arm64", "linux-64"]
+# , "win-64", "osx-64"]
+
+[tasks]
+generate = "rattler-build generate-recipe cran -w "
+build = "rattler-build build -m ./variant_config.yaml --recipe "
+
+[dependencies]
+rattler-build = ">=0.42.1"
