@@ -13,28 +13,26 @@ jobs:
 
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - { target: linux-64,  os: ubuntu-24.04 }
-          - { target: win-64,    os: windows-latest }
-          # force older macos-13 to get x86_64 runners
-          - { target: osx-64,    os: macos-13 }
-          - { target: osx-arm64, os: macos-14 }
-      fail-fast: false
-
-    runs-on: ${{ matrix.os }}
+            - target: linux-64
+              os: ubuntu-24.04
+              runner: github
+            - target: osx-arm64
+              runner: [self-hosted, macOS, ARM64]
+    runs-on: ${{ matrix.os || matrix.runner }}
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 2
 
-    - uses: prefix-dev/setup-pixi@v0.8.8
-      with:
-        pixi-version: v0.44.0
-
-        # cache: true
-        auth-host: prefix.dev
-        auth-token: ${{ secrets.PREFIX_DEV_TOKEN }} 
+    #- uses: prefix-dev/setup-pixi@v0.8.8
+    #with:
+    #    pixi-version: v0.44.0
+    #    cache: false
+    #    auth-host: prefix.dev
+    #    auth-token: ${{ secrets.PREFIX_DEV_TOKEN }} 
 
     - name: Add .pixi/envs/default to the $PATH
       shell: bash
@@ -47,9 +45,10 @@ jobs:
         TARGET_PLATFORM: ${{ matrix.target }}
 
       run: |
-        pixi run rattler-build build --recipe-dir . \
+        pixi run rattler-build build --recipe-dir yamet \
           --skip-existing=all --target-platform=$TARGET_PLATFORM \
-          -c conda-forge -c bioconda -c r -c https://prefix.dev/almost-conductor
+          --verbose \
+          -c conda-forge -c bioconda -c https://prefix.dev/almost-conductor
 
     - name: Upload all packages
       shell: bash
